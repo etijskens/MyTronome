@@ -1,0 +1,6 @@
+***
+API
+***
+
+.. automodule:: mytronome
+   :members:
