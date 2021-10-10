@@ -8,7 +8,7 @@ Top-level package for mytronome.
 """
 
 # import mytronome.cli_beat
-__version__ = "0.0.0"
+__version__ = "1.0.0"
 
 from PyQt5 import QtWidgets, QtCore, QtMultimedia
 import pickle, os
