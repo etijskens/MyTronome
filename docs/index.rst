@@ -8,6 +8,7 @@ Welcome to MyTronome's documentation!
 
    readme
    installation
+   apps
    api
    authors
    changelog
