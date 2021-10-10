@@ -13,6 +13,7 @@ __version__ = "0.0.0"
 from PyQt5 import QtWidgets, QtCore, QtMultimedia
 import pickle, os
 
+from time import time
 
 class MyTronome(QtWidgets.QWidget):
 
@@ -21,6 +22,7 @@ class MyTronome(QtWidgets.QWidget):
         self.initUI()
 
         if os.path.exists('MyTronome.data'):
+            print("Reading 'MyTronome.data'")
             with open('MyTronome.data', 'rb') as pickled:
                 data = pickle.load(pickled)
                 #                 print(data)
@@ -144,10 +146,10 @@ class MyTronome(QtWidgets.QWidget):
 
             if self.linear.isChecked() and self.ticks_per_beat_spinbox.value() == 0:
                 ms = 60000 / self.beats_per_minute_spinbox.value()
-                # print(f'linear: {ms=}')
+                print(f'linear: {ms=}')
             else:
                 ms = 60000 / (self.beats_per_minute_spinbox.value() * self.ticks_per_beat_spinbox.value())
-                # print(f'swing: {ms=}')
+                print(f'swing: {ms=}')
 
             self.tmr = QtCore.QTimer(self)
             self.tmr.setInterval(ms)
@@ -155,6 +157,10 @@ class MyTronome(QtWidgets.QWidget):
 
             self.started = True
             self.start_stop_button.setText('Stop')
+            # self.t0 = time()
+            self.minute_counter = 0
+            self.minute = time()
+
             self.tmr.start()
 
     def keyPressEvent(self, e):
@@ -173,6 +179,16 @@ class MyTronome(QtWidgets.QWidget):
             self.sound_beat.play()
         self.counter += 1
         self.counter = self.counter % self.beats_per_measure_spinbox.value()
+        t1 = time()
+        # print(t1-self.t0)
+        # self.t0 = t1
+        self.minute_counter +=1
+        self.minute_counter %= self.beats_per_minute_spinbox.value()
+        if self.minute_counter == 0:
+            m = (t1 - self.minute)/60
+            oops = 'oop' if abs(1-m) > 0.005 else ''
+            print(m,oops)
+            self.minute = t1
 
     #         print(self.counter)
 
@@ -245,12 +261,12 @@ class MyTronome(QtWidgets.QWidget):
         if restart:
             self.start_stop()
 
-    def __del__(self):
+    def closeEvent(self, a0):
+        print("Writing 'MyTronome.data'")
         data = {'beats_per_minute': self.beats_per_minute_spinbox.value()
             , 'beats_per_measure': self.beats_per_measure_spinbox.value()
             , 'ticks_per_beat': self.ticks_per_beat_spinbox.value()
             , 'swing': self.swing.isChecked()
-                }
-        #         print(data)
+        }
         pickled = open('MyTronome.data', 'wb')
         pickle.dump(data, pickled)
