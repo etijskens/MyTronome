@@ -1,3 +1,4 @@
+#!/Users/etijskens/workspace/MyTronome/venv/bin/python
 # -*- coding: utf-8 -*-
 """Command line interface beat (no sub-commands)."""
 

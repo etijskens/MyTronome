@@ -107,7 +107,7 @@ class MyTronome(QtWidgets.QWidget):
 
         self.sound_accent = QtMultimedia.QSound("mytronome/accent.wav")
         self.sound_beat   = QtMultimedia.QSound("mytronome/beat.wav")
-        self.sound_click  = QtMultimedia.QSound("mytronome/click2.wav")
+        self.sound_click  = QtMultimedia.QSound("mytronome/click-1.wav")
 
     def style_changed(self, button):
         if hasattr(self, 'tmr'):
