@@ -92,7 +92,7 @@ class MyTronome(QtWidgets.QWidget):
         style.buttonClicked.connect(self.style_changed)
         self.linear.setChecked(True)
         self.beep = self.beep_linear
-        qhlayout = QtWidgets.QHBoxLayout()
+        qhlayout = QtWidgets.QHBoxLayout()  
         qhlayout.addWidget(self.linear)
         #         qhlayout.addWidget(self.soft_swing)
         qhlayout.addWidget(self.swing)
